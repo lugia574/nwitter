@@ -115,3 +115,45 @@ routers 에는 이제 설정할 route들을 생성할꺼임
 ```
 npm i react-router-dom@5.3.0
 ```
+
+```js
+import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  HashRouter,
+  Route,
+  Switch,
+} from "react-router-dom";
+import Auth from "../routes/Auth";
+import Home from "../routes/Home";
+
+const AppRouter = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  return (
+    <Router>
+      <Switch>
+        {isLoggedIn ? (
+          <>
+            <Route exact path="/">
+              <Home />
+            </Route>
+          </>
+        ) : (
+          <Route exact path="/">
+            <Auth />
+          </Route>
+        )}
+      </Switch>
+    </Router>
+  );
+};
+export default AppRouter;
+```
+
+여기서 <> 이게 뭐냐면
+
+Fragment 인데
+
+많은 요소들을 render 하고 싶을때 사용함
+
+https://7942yongdae.tistory.com/88
