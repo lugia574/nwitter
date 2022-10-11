@@ -87,3 +87,31 @@ const firebaseConfig = {
 // Initialize Firebase
 export default firebase.initializeApp(firebaseConfig);
 ```
+
+## 1.2 Router Setup
+
+이제 라우터를 하자
+
+components, routers 폴더 만들기 ㄱㄱ
+
+그리고 `App.js` 을 components에 옮겨줘
+
+routers 에는 이제 설정할 route들을 생성할꺼임
+
+이번 프젝에서 만들 route 는 총 4개임
+
+- Authentication 인증
+
+- Home 메인
+
+- Profile 개인 프로필
+
+- EditProfile 프로필 수정
+
+이렇게 될꺼임
+
+자 npm 으로 설치 ㄱㄱ
+
+```
+npm i react-router-dom@5.3.0
+```
