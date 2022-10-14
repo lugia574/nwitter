@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
-  HashRouter,
+  HashRouter as Router,
   Route,
   Switch,
+  Redirect,
 } from "react-router-dom";
 import Auth from "routes/Auth";
 import Home from "routes/Home";
