@@ -7,24 +7,19 @@ const Home = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log(`가긴했냐? ${nweet}`);
-
-    // const docRef = await dbService.collection("nweets").add({
-    //   nweet,
-    //   createdAt: Date.now(),
-    // });
-
-    const docRef = await addDoc(collection(dbService, "nweets"), {
-      nweet,
-      createdAt: Date.now(),
-    });
-
-    // const docRef = await addDoc(collection(dbService, "nweets"), {
-    //   nweet,
-    //   createdAt: serverTimestamp(),
-    // });
-
-    console.log(docRef);
-    setNweet("");
+    if (nweet !== "") {
+      let docRef;
+      try {
+        docRef = await addDoc(collection(dbService, "nweets"), {
+          nweet: nweet,
+          createdAt: Date.now(),
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(docRef);
+      setNweet("");
+    }
   };
   const onChange = (event) => {
     const {
