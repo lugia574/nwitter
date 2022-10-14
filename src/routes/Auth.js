@@ -1,11 +1,23 @@
 import { authService, firebaseInstance } from "fbase";
 import React, { useState } from "react";
 
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+} from "firebase/auth";
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
+
   const onChange = (event) => {
     const { name, value } = event.target;
     // const {target : {name, value},} =event;
@@ -15,18 +27,25 @@ const Auth = () => {
       setPassword(value);
     }
   };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     try {
       let data;
 
       if (newAccount) {
-        data = await authService.createUserWithEmailAndPassword(
+        // data = await authService.createUserWithEmailAndPassword(
+        //   email,
+        //   password
+        // );
+        data = await createUserWithEmailAndPassword(
+          authService,
           email,
           password
         );
       } else {
-        data = await authService.signInWithEmailAndPassword(email, password);
+        // data = await authService.signInWithEmailAndPassword(email, password);
+        data = await signInWithEmailAndPassword(authService, email, password);
       }
       console.log(data);
     } catch (error) {
@@ -41,12 +60,15 @@ const Auth = () => {
     } = event;
     let provider;
     if (name === "google") {
-      provider = new firebaseInstance.auth.GoogleAuthProvider();
+      //   provider = new firebaseInstance.auth.GoogleAuthProvider();
+      provider = new GoogleAuthProvider();
     } else if (name === "github") {
-      provider = new firebaseInstance.auth.GithubAuthProvider();
+      // provider = new firebaseInstance.auth.GithubAuthProvider();
+      provider = new GithubAuthProvider();
     }
-    const data = await authService.signInWithPopup(provider);
-    console.log(data);
+    // const data = await authService.signInWithPopup(provider);
+    const data = await signInWithPopup(authService, provider);
+    // console.log(data);
   };
 
   return (
