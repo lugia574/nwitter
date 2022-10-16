@@ -9,6 +9,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { dbService } from "fbase";
+import Nweet from "components/Nweet";
 
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
@@ -25,17 +26,6 @@ const Home = ({ userObj }) => {
         ...doc.data(),
       }));
       setNweets(nweetArr);
-      const q = query(
-        collection(dbService, "nweets"),
-        orderBy("createdAt", "desc")
-      );
-      onSnapshot(q, (snapshot) => {
-        const nweetArr = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setNweets(nweetArr);
-      });
     });
   }, []);
 
@@ -78,9 +68,11 @@ const Home = ({ userObj }) => {
       </form>
       <div>
         {nweets.reverse().map((nweet) => (
-          <div key={nweet.id}>
-            <h4>{nweet.text}</h4>
-          </div>
+          <Nweet
+            nweetObj={nweet}
+            key={nweet.id}
+            isOwner={nweet.createdId === userObj.uid}
+          />
         ))}
       </div>
     </div>
