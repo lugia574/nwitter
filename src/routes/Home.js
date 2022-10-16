@@ -3,33 +3,42 @@ import {
   addDoc,
   collection,
   getDocs,
+  onSnapshot,
+  orderBy,
   query,
   serverTimestamp,
 } from "firebase/firestore";
 import { dbService } from "fbase";
 
-const Home = () => {
+const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-  const getDbList = async () => {
-    const q = query(collection(dbService, "nweets"));
-    const querySnapshot = await getDocs(q);
-
-    // console.log("db값 가져왔다", querySnapshot);
-
-    querySnapshot.forEach((doc) => {
-      // es6 spread attribute 기능
-      const nweetObject = {
-        ...doc.data(),
-        id: doc.id,
-      };
-      setNweets((prev) => [nweetObject, ...prev]);
-    });
-  };
 
   useEffect(() => {
-    getDbList();
+    const q = query(
+      collection(dbService, "nweets"),
+      orderBy("createdAt", "desc")
+    );
+    onSnapshot(q, (snapshot) => {
+      const nweetArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNweets(nweetArr);
+      const q = query(
+        collection(dbService, "nweets"),
+        orderBy("createdAt", "desc")
+      );
+      onSnapshot(q, (snapshot) => {
+        const nweetArr = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setNweets(nweetArr);
+      });
+    });
   }, []);
+
   const onSubmit = async (event) => {
     event.preventDefault();
     // console.log(`가긴했냐? ${nweet}`);
@@ -37,7 +46,8 @@ const Home = () => {
       let docRef;
       try {
         docRef = await addDoc(collection(dbService, "nweets"), {
-          nweet: nweet,
+          text: nweet,
+          createdId: userObj.uid,
           createdAt: Date.now(),
         });
       } catch (error) {
@@ -68,8 +78,8 @@ const Home = () => {
       </form>
       <div>
         {nweets.reverse().map((nweet) => (
-          <div id={nweet.id}>
-            <h4>{nweet.nweet}</h4>
+          <div key={nweet.id}>
+            <h4>{nweet.text}</h4>
           </div>
         ))}
       </div>
