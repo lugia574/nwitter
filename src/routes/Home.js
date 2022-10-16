@@ -1,12 +1,38 @@
-import React, { useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { dbService } from "fbase";
 
 const Home = () => {
   const [nweet, setNweet] = useState("");
+  const [nweets, setNweets] = useState([]);
+  const getDbList = async () => {
+    const q = query(collection(dbService, "nweets"));
+    const querySnapshot = await getDocs(q);
+
+    // console.log("db값 가져왔다", querySnapshot);
+
+    querySnapshot.forEach((doc) => {
+      // es6 spread attribute 기능
+      const nweetObject = {
+        ...doc.data(),
+        id: doc.id,
+      };
+      setNweets((prev) => [nweetObject, ...prev]);
+    });
+  };
+
+  useEffect(() => {
+    getDbList();
+  }, []);
   const onSubmit = async (event) => {
     event.preventDefault();
-    console.log(`가긴했냐? ${nweet}`);
+    // console.log(`가긴했냐? ${nweet}`);
     if (nweet !== "") {
       let docRef;
       try {
@@ -17,7 +43,7 @@ const Home = () => {
       } catch (error) {
         console.log(error);
       }
-      console.log(docRef);
+      // console.log(docRef);
       setNweet("");
     }
   };
@@ -40,6 +66,13 @@ const Home = () => {
         />
         <input type="submit" value="Nwitter" />
       </form>
+      <div>
+        {nweets.reverse().map((nweet) => (
+          <div id={nweet.id}>
+            <h4>{nweet.nweet}</h4>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
