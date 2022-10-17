@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   addDoc,
   collection,
-  getDocs,
   onSnapshot,
   orderBy,
   query,
-  serverTimestamp,
 } from "firebase/firestore";
-import { dbService } from "fbase";
+import { ref, uploadString, getDownloadURL } from "@firebase/storage";
+import { dbService, storageService } from "fbase";
 import Nweet from "components/Nweet";
+import { v4 } from "uuid";
 
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
   const [nweets, setNweets] = useState([]);
-  const [preview, setPreview] = useState();
+  const [preview, setPreview] = useState("");
   const fileInput = useRef();
 
   useEffect(() => {
@@ -33,23 +33,31 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // console.log(`가긴했냐? ${nweet}`);
-    if (nweet !== "") {
-      let docRef;
+    let nwieetImgUrl = "";
+    if (preview !== "") {
+      const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
+      const response = await uploadString(fileRef, preview, "data_url");
+      nwieetImgUrl = await getDownloadURL(response.ref);
+    }
+
+    const nweetObj = {
+      text: nweet,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      nwieetImgUrl,
+    };
+    if (nweet !== "" && preview !== "") {
       try {
-        docRef = await addDoc(collection(dbService, "nweets"), {
-          text: nweet,
-          createdId: userObj.uid,
-          createdAt: Date.now(),
-        });
+        await addDoc(collection(dbService, "nweets"), nweetObj);
       } catch (error) {
         console.log(error);
       }
-      // console.log(docRef);
-      setNweet("");
     } else {
       alert("입력값이 없습니다.");
     }
+
+    setNweet("");
+    setPreview("");
   };
   const onChange = (event) => {
     const {
@@ -75,7 +83,7 @@ const Home = ({ userObj }) => {
     }
   };
   const onClearPreview = () => {
-    setPreview(null);
+    setPreview("");
     fileInput.current.value = "";
   };
 
