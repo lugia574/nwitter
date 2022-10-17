@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { doc, deleteDoc, updateDoc, getFirestore } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc } from "firebase/firestore";
 import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
-import { async } from "@firebase/util";
 import { dbService } from "fbase";
 
 const Nweet = ({ nweetObj, isOwner }) => {
