@@ -33,20 +33,21 @@ const Home = ({ userObj }) => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    let nwieetImgUrl = "";
+    let nweetImgUrl = "";
     if (preview !== "") {
       const fileRef = ref(storageService, `${userObj.uid}/${v4()}`);
       const response = await uploadString(fileRef, preview, "data_url");
-      nwieetImgUrl = await getDownloadURL(response.ref);
+      nweetImgUrl = await getDownloadURL(response.ref);
     }
 
     const nweetObj = {
       text: nweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
-      nwieetImgUrl,
+      nweetImgUrl,
     };
-    if (nweet !== "" && preview !== "") {
+
+    if (nweet === "" || preview === "") {
       try {
         await addDoc(collection(dbService, "nweets"), nweetObj);
       } catch (error) {
@@ -116,7 +117,7 @@ const Home = ({ userObj }) => {
           <Nweet
             nweetObj={nweet}
             key={nweet.id}
-            isOwner={nweet.createdId === userObj.uid}
+            isOwner={nweet.creatorId === userObj.uid}
           />
         ))}
       </div>

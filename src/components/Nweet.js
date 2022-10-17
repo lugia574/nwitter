@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { doc, deleteDoc, updateDoc } from "firebase/firestore";
+import { doc, deleteDoc, updateDoc, getFirestore } from "firebase/firestore";
+import { deleteObject, ref } from "@firebase/storage";
+import { storageService } from "../fbase";
 import { async } from "@firebase/util";
 import { dbService } from "fbase";
 
@@ -7,12 +9,17 @@ const Nweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
   const [newNweet, setNewNweet] = useState(nweetObj.text);
   const NweetTextRef = doc(dbService, "nweets", `${nweetObj.id}`);
+  // const NweetTextRef = doc(getFirestore(), `nweets/${nweetObj.id}`);
+  const imgRef = ref(storageService, nweetObj.nweetImgUrl);
 
   const onDeleteClick = async () => {
     const ok = window.confirm("realy?");
     if (ok) {
       try {
         await deleteDoc(NweetTextRef);
+        if (nweetObj.nweetImgUrl !== "") {
+          await deleteObject(imgRef);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -53,8 +60,8 @@ const Nweet = ({ nweetObj, isOwner }) => {
       ) : (
         <>
           <h4>{nweetObj.text}</h4>
-          {nweetObj.nwieetImgUrl && (
-            <img src={nweetObj.nwieetImgUrl} width="100px" height="100px" />
+          {nweetObj.nweetImgUrl && (
+            <img src={nweetObj.nweetImgUrl} width="100px" height="100px" />
           )}
           {isOwner && (
             <>
