@@ -2,8 +2,9 @@ import { dbService, storageService } from "fbase";
 import { addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import React, { useRef, useState } from "react";
-
 import { v4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 const NweetFactory = ({ userObj }) => {
   const [nweet, setNweet] = useState("");
@@ -68,25 +69,45 @@ const NweetFactory = ({ userObj }) => {
     fileInput.current.value = "";
   };
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} className="factoryForm">
+      <div className="factoryInput__container">
+        <input
+          className="factoryInput__input"
+          value={nweet}
+          onChange={onChange}
+          type="text"
+          placeholder="What's on your mind?"
+          maxLength={120}
+        />
+        <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+      </div>
+      <label for="attach-file" className="factoryInput__label">
+        <span>Add photos</span>
+        <FontAwesomeIcon icon={faPlus} />
+      </label>
       <input
-        type="text"
-        placeholder="what's on your mind"
-        maxLength={120}
-        value={nweet}
-        onChange={onChange}
-      />
-      <input
+        id="attach-file"
         type="file"
         accept="image/*"
         onChange={onFileChange}
         ref={fileInput}
+        style={{
+          opacity: 0,
+        }}
       />
-      <input type="submit" value="Nwitter" />
       {preview && (
-        <div>
-          <img src={preview} alt="" width="100px" height="100px" />
-          <button onClick={onClearPreview}>Clear</button>
+        <div className="factoryForm__attachment">
+          <img
+            src={preview}
+            alt=""
+            style={{
+              backgroundImage: preview,
+            }}
+          />
+          <div className="factoryForm__clear" onClick={onClearPreview}>
+            <span>Remove</span>
+            <FontAwesomeIcon icon={faTimes} />
+          </div>
         </div>
       )}
     </form>
