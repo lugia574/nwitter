@@ -27,14 +27,15 @@ const NweetFactory = ({ userObj }) => {
       nweetImgUrl,
     };
 
-    if (nweet === "" || preview === "") {
+    // console.log("빨리나와봐 에러 좀 찾아보게", preview);
+    if (nweet === "" && preview === "") {
+      alert("입력값이 없습니다.");
+    } else {
       try {
         await addDoc(collection(dbService, "nweets"), nweetObj);
       } catch (error) {
         console.log(error);
       }
-    } else {
-      alert("입력값이 없습니다.");
     }
 
     setNweet("");
@@ -65,7 +66,7 @@ const NweetFactory = ({ userObj }) => {
   };
   const onClearPreview = () => {
     setPreview("");
-    console.log(typeof fileInput, "얍");
+    // console.log(typeof fileInput, "얍");
     fileInput.current.value = "";
   };
   return (
@@ -81,7 +82,7 @@ const NweetFactory = ({ userObj }) => {
         />
         <input type="submit" value="&rarr;" className="factoryInput__arrow" />
       </div>
-      <label for="attach-file" className="factoryInput__label">
+      <label htmlFor="attach-file" className="factoryInput__label">
         <span>Add photos</span>
         <FontAwesomeIcon icon={faPlus} />
       </label>
