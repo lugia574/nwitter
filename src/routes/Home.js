@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
-import { dbService } from "fbase";
+import { authService, dbService } from "fbase";
 import Nweet from "components/Nweet";
 import NweetFactory from "components/NweetFactory";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Home = ({ userObj }) => {
   const [nweets, setNweets] = useState([]);
@@ -13,12 +14,17 @@ const Home = ({ userObj }) => {
       collection(dbService, "nweets"),
       orderBy("createdAt", "desc")
     );
-    onSnapshot(q, (snapshot) => {
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       const nweetArr = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
       setNweets(nweetArr);
+    });
+    onAuthStateChanged(authService, (user) => {
+      if (user == null) {
+        unsubscribe();
+      }
     });
   }, []);
 
