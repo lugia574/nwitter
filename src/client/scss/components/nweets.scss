@@ -8,15 +8,14 @@
 
 .nweet {
   margin-bottom: 20px;
-  background-color: white;
-  width: 100%;
-  max-width: 320px;
+  border-top: 1px solid gray;
+  width: inherit;
   padding: 20px;
-  border-radius: 10px;
+  height: auto;
   position: relative;
   display: flex;
   flex-direction: column;
-  color: rgba(0, 0, 0, 0.8);
+  color: white;
 }
 
 .nweet h4 {
@@ -27,15 +26,14 @@
   right: -10px;
   top: 10px;
   border-radius: 5px;
-  width: 150px;
-  height: 150px;
+  width: 20rem;
   margin-top: 10px;
 }
 
 .nweet__actions {
   position: absolute;
   right: 10px;
-  top: 10px;
+  bottom: 10px;
 }
 
 .nweet__actions span {

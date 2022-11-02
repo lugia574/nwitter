@@ -3,6 +3,7 @@ import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 import { authService, dbService } from "fbase";
 import Nweet from "components/Nweet";
+import MainNweet from "components/MainNweet";
 import NweetFactory from "components/NweetFactory";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -31,15 +32,25 @@ const Home = ({ userObj }) => {
   return (
     <div className="container">
       <NweetFactory userObj={userObj} />
-      <div style={{ marginTop: 30 }}>
-        {nweets.reverse().map((nweet) => (
-          <Nweet
-            nweetObj={nweet}
-            key={nweet.id}
-            isOwner={nweet.creatorId === userObj.uid}
-          />
+      <>
+        {nweets.reverse().map((nweet, index) => (
+          <>
+            {index === 0 ? (
+              <MainNweet
+                nweetObj={nweet}
+                key={nweet.id}
+                isOwner={nweet.creatorId === userObj.uid}
+              />
+            ) : (
+              <Nweet
+                nweetObj={nweet}
+                key={nweet.id}
+                isOwner={nweet.creatorId === userObj.uid}
+              />
+            )}
+          </>
         ))}
-      </div>
+      </>
     </div>
   );
 };
