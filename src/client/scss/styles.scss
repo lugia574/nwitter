@@ -11,6 +11,7 @@
 @import "./components/header.scss";
 @import "./components/footer.scss";
 @import "./components/nweets.scss";
+@import "./components/nwitterFactory.scss";
 
 * {
   box-sizing: border-box;
@@ -27,6 +28,11 @@ body {
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.main {
+  margin: 0;
+  background-color: #9514;
 }
 
 .container {

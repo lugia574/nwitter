@@ -22,7 +22,7 @@
   height: 40px;
   padding: 0px 20px;
   color: white;
-  border: 1px solid #04aaff;
+  border: 1px solid #ececec;
   border-radius: 20px;
   font-weight: 500;
   font-size: 12px;
@@ -31,17 +31,17 @@
 .factoryInput__arrow {
   position: absolute;
   right: 0;
-  background-color: #04aaff;
+  background-color: #ececec;
   height: 40px;
   width: 40px;
   padding: 10px 0px;
   text-align: center;
   border-radius: 20px;
-  color: white;
+  color: #191919;
 }
 
 .factoryInput__label {
-  color: #04aaff;
+  color: #ececec;
   cursor: pointer;
 }
 
@@ -63,7 +63,7 @@
 }
 
 .factoryForm__clear {
-  color: #04aaff;
+  color: #ececec;
   cursor: pointer;
   text-align: center;
 }

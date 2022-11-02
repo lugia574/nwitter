@@ -8,6 +8,11 @@
   align-items: center;
 }
 
+.sign {
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
 .authBtns {
   display: flex;
   justify-content: space-between;
@@ -25,6 +30,10 @@
   width: 150px;
   background: white;
   cursor: pointer;
+
+  .socialBtn {
+    margin-left: 7px;
+  }
 }
 
 /* AuthForm */
