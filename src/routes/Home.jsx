@@ -28,29 +28,30 @@ const Home = ({ userObj }) => {
       }
     });
   }, []);
+  const listItems = nweets
+    .reverse()
+    .map((nweet, index) => (
+      <>
+        {index === 0 ? (
+          <MainNweet
+            nweetObj={nweet}
+            key={nweet.id}
+            isOwner={nweet.creatorId === userObj.uid}
+          />
+        ) : (
+          <Nweet
+            nweetObj={nweet}
+            key={nweet.id}
+            isOwner={nweet.creatorId === userObj.uid}
+          />
+        )}
+      </>
+    ));
 
   return (
     <div className="container">
       <NweetFactory userObj={userObj} />
-      <>
-        {nweets.reverse().map((nweet, index) => (
-          <>
-            {index === 0 ? (
-              <MainNweet
-                nweetObj={nweet}
-                key={nweet.id}
-                isOwner={nweet.creatorId === userObj.uid}
-              />
-            ) : (
-              <Nweet
-                nweetObj={nweet}
-                key={nweet.id}
-                isOwner={nweet.creatorId === userObj.uid}
-              />
-            )}
-          </>
-        ))}
-      </>
+      <>{listItems}</>
     </div>
   );
 };
