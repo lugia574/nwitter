@@ -20,6 +20,13 @@
   border: 1px solid #191900;
   border-radius: 8px;
   opacity: 0.9;
+
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.chatContainer:-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 /* 모달창 내부 X버튼 */
@@ -37,14 +44,13 @@
     width: auto;
 
     .line {
-      margin-top: 0.5rem;
       display: flex;
 
       .chat-box {
         margin: 1rem;
         width: auto;
         background: #999999;
-        padding: 0.5rem;
+        padding: 0.5rem 10rem 0.5rem;
         max-width: 30rem;
         border-radius: 10px;
       }

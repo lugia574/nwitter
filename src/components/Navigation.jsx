@@ -13,7 +13,6 @@ import Talke from "./Talke";
 const Navigation = ({ userObj }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const TalkHandle = () => {
-    console.log("되긴하냐?");
     setModalOpen(true);
   };
   return (

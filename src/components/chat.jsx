@@ -5,12 +5,12 @@ const CahtFactory = (chat) => {
   const { user, body } = chat.chat;
 
   return (
-    <div class="chat-content">
-      <div class="line">
+    <div className="chat-content">
+      <div className="line">
         {user === "ai" ? (
-          <span class="chat-box">{body}</span>
+          <span className="chat-box">{body}</span>
         ) : (
-          <span class="chat-box mine">{body}</span>
+          <span className="chat-box mine">{body}</span>
         )}
       </div>
     </div>
