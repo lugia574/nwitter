@@ -1,0 +1,80 @@
+/* 모달창을 화면 중앙. 최상단에 노출 */
+.chatContainer {
+  /* 모달창 크기 */
+  width: 700px;
+  height: 600px;
+
+  /* 최상단 위치 */
+  z-index: 999;
+
+  /* 중앙 배치 */
+  /* top, bottom, left, right 는 브라우저 기준으로 작동한다. */
+  /* translate는 본인의 크기 기준으로 작동한다. */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  /* 모달창 디자인 */
+  background-color: #191919;
+  border: 1px solid #191900;
+  border-radius: 8px;
+  opacity: 0.9;
+}
+
+/* 모달창 내부 X버튼 */
+.close {
+  background-color: #191919;
+  border: 1px solid #191900;
+  color: #999999;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.chat {
+  .chat-content {
+    width: auto;
+
+    .line {
+      margin-top: 0.5rem;
+      display: flex;
+
+      .chat-box {
+        margin: 1rem;
+        width: auto;
+        background: #999999;
+        padding: 0.5rem;
+        max-width: 30rem;
+        border-radius: 10px;
+      }
+      .mine {
+        margin-left: auto;
+      }
+    }
+  }
+}
+
+.inputContainer {
+  display: flex;
+  justify-content: center;
+  .chatForm {
+    position: absolute;
+    bottom: 10px;
+    background: #eee;
+    padding: 5px;
+    display: flex;
+    border-radius: 10px;
+    width: 60%;
+
+    .chatInput {
+      width: 90%;
+      color: #191900;
+    }
+    .chatSubmit {
+      position: absolute;
+      right: 10px;
+      color: #191900;
+    }
+  }
+}

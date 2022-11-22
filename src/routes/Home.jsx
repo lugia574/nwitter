@@ -32,19 +32,13 @@ const Home = ({ userObj }) => {
     .reverse()
     .map((nweet, index) => (
       <>
-        {index === 0 ? (
-          <MainNweet
-            nweetObj={nweet}
-            key={nweet.id}
-            isOwner={nweet.creatorId === userObj.uid}
-          />
-        ) : (
+        {
           <Nweet
             nweetObj={nweet}
             key={nweet.id}
             isOwner={nweet.creatorId === userObj.uid}
           />
-        )}
+        }
       </>
     ));
 
@@ -56,3 +50,11 @@ const Home = ({ userObj }) => {
   );
 };
 export default Home;
+
+// index === 0 ? (
+//   <MainNweet
+//     nweetObj={nweet}
+//     key={nweet.id}
+//     isOwner={nweet.creatorId === userObj.uid}
+//   />
+// ) :

@@ -4,8 +4,8 @@ import { deleteObject, ref } from "@firebase/storage";
 import { storageService } from "../fbase";
 import { dbService } from "fbase";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const MainNweet = ({ nweetObj, isOwner }) => {
   const [editing, setEditing] = useState(false);
