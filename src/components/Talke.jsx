@@ -24,7 +24,6 @@ const Talke = ({ setModalOpen }) => {
     event.preventDefault();
     const body = event.target.chatText.value;
     const user = "mine";
-    console.log("지금 간다");
 
     const newChat = { id: nextId, user, body };
     const newChats = [...chats];
@@ -36,6 +35,7 @@ const Talke = ({ setModalOpen }) => {
   };
 
   const createAiChat = (text) => {
+    console.log("생성으로 넘어갔습니다~", text);
     const body = text;
     const user = "ai";
 
