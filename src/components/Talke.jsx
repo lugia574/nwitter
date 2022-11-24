@@ -53,22 +53,18 @@ const Talke = ({ setModalOpen }) => {
   const openai = new OpenAIApi(configuration);
 
   const aiGo = async () => {
-    console.log("갑니다");
-    await openai
-      .createCompletion({
-        model: "text-davinci-002",
-        prompt: { chats },
-        temperature: 0.7,
-        max_tokens: 256,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      })
-      .then((result) => {
-        const re = result.data.choices[0].text;
-        console.log("작동이 되는건가여?", re);
-        createAiChat(re);
-      });
+    const result = await openai.createCompletion({
+      model: "text-davinci-002",
+      prompt: nowChat,
+      temperature: 0.7,
+      max_tokens: 128,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+    });
+
+    const re = result.data.choices[0].text;
+    createAiChat(re);
   };
 
   return (
