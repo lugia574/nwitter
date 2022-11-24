@@ -6,11 +6,8 @@ import CahtFactory from "./chat";
 const Talke = ({ setModalOpen }) => {
   const { Configuration, OpenAIApi } = require("openai");
   const [nowChat, setNowChat] = useState("");
-  const [chats, setChats] = useState([
-    { id: 1, user: "ai", body: "안녕?" },
-    { id: 2, user: "mine", body: "안녕" },
-  ]);
-  const [nextId, setNextId] = useState(3);
+  const [chats, setChats] = useState([]);
+  const [nextId, setNextId] = useState(0);
   let chatList = chats.map((chat) => <CahtFactory key={chat.id} chat={chat} />);
   const chatHandle = (event) => {
     const chat = event.target.value;
@@ -19,31 +16,24 @@ const Talke = ({ setModalOpen }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
+  const createForm = (body, user) => {
+    const newChat = { id: nextId, user, body };
+    const newChats = [...chats];
+    newChats.push(newChat);
+    console.log("자 이게 새로 만들어진 리스트야", newChats);
+    setChats(newChats);
+    setNextId(nextId + 1);
+    console.log(chats);
+  };
 
   const createChat = (event) => {
     event.preventDefault();
     const body = event.target.chatText.value;
     const user = "mine";
 
-    const newChat = { id: nextId, user, body };
-    const newChats = [...chats];
-    newChats.push(newChat);
-    setChats(newChats);
-    setNextId(nextId + 1);
+    createForm(body, user);
     setNowChat("");
-    aiGo();
-  };
-
-  const createAiChat = (text) => {
-    console.log("생성으로 넘어갔습니다~", text);
-    const body = text;
-    const user = "ai";
-
-    const newChat = { id: nextId, user, body };
-    const newChats = [...chats];
-    newChats.push(newChat);
-    setChats(newChats);
-    setNextId(nextId + 1);
+    //aiGo();
   };
 
   const configuration = new Configuration({
@@ -64,7 +54,9 @@ const Talke = ({ setModalOpen }) => {
     });
 
     const re = result.data.choices[0].text;
-    createAiChat(re);
+    const user = "ai";
+
+    createForm(re, user);
   };
 
   return (
