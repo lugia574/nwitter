@@ -12,12 +12,9 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "assert": "^2.0.0",
-    "axios": "^1.2.0",
-    "buffer": "^6.0.3",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
     "firebase": "^9.12.1",
-    "gh-pages": "^4.0.0",
     "openai": "^3.1.0",
     "path": "^0.12.7",
     "react": "^18.2.0",
@@ -60,5 +57,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://lugia574.github.io/nwitter"
+  "homepage": "https://lugia574.github.io/nwitter",
+  "devDependencies": {
+    "@babel/node": "^7.20.5"
+  }
 }

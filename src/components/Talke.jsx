@@ -20,7 +20,7 @@ const Talke = ({ setModalOpen }) => {
     const newChat = { id: nextId, user, body };
     const newChats = [...chats];
     newChats.push(newChat);
-    console.log("자 이게 새로 만들어진 리스트야", newChats);
+    // console.log("자 이게 새로 만들어진 리스트야", newChats);
     setChats(newChats);
     setNextId(nextId + 1);
     console.log(chats);
